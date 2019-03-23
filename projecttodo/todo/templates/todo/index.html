@@ -13,13 +13,14 @@
 <body>
     <div class="container" id="wrapper">
         <div class="row">
-            <div class="col-lg-6 col-lg-offset-6 py-2" id="content">
+            <div class="col-lg-7 col-lg-offset-6 py-2 m-auto" id="content">
                 <h4>WHAT DO YOU WANT TO DO TODAY?</h4>
-                <form action="" method="POST" role="form" >
+                <form action="{% url 'add' %}" method="POST" role="form" >
+                    {% csrf_token %}
                     <div class="form-group py-3">
                         <div class="input-group">
-                            <input type="text" name="" id="" class="form-control"
-                             placeholder="Enter todo" aria-label="Todo" aria-describedby="add btn">
+                            
+                             {{ form.text }}
                              <span class="input-group-btn px-2">
                                  <button type="submit" class="btn btn-default bg-primary" id="add-btn">ADD</button>
                              </span>
@@ -27,17 +28,17 @@
                     </div>
                 </form>
                 <div class="row t10">
-                    <div class="col-lg-12">
-                        <div class="btn-toolbar">
+                    <div class="col-lg-12 align-items-center">
+                        <div class="btn-toolbar ">
                             <div class="btn-group px-5">
-                                <button type="submit" class="btn btn-warning">
+                                <a href="{% url 'delete_completed' %}"><button type="submit" class="btn btn-warning">
                                     <i class="glyphicon glyphicon-trash">DELETE COMPLETED</i>
-                                </button>
+                                </button></a>
                             </div>
                             <div class="btn-group">
-                                <button type="submit" class="btn btn-danger">
+                                <a href="{% url 'delete_all' %}"><button type="submit" class="btn btn-danger">
                                     <i class="glyphicon glyphicon-trash">DELETE ALL</i>
-                                </button>
+                                </button></a>
                             </div>
                         </div>
                     </div>
@@ -48,7 +49,7 @@
                         {% if todo.complete %}
                         <li class="list-group-item todo-completed"> {{ todo.text }}</li>
                         {% else %}
-                        <a href=""><li class="list-group-item">{{ todo.text }}</li></a>
+                        <a href="{% url 'complete' todo.id %}"><li class="list-group-item">{{ todo.text }}</li></a>
                         {% endif %}
                     {% endfor %}
                 </ul>
